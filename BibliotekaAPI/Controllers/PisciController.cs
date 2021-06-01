@@ -136,5 +136,26 @@ namespace BibliotekaAPI.Controllers
 
             db.Close();
         }
+
+        [Route("DELETE/{idPisca}")]
+        [HttpDelete]
+        public void Brisanje(int idPisca)
+        {
+            string queryString = "Delete from Pisci where PKPisacID =" + idPisca;
+
+            SqlCommand command = new SqlCommand(queryString, db);
+
+            try
+            {
+                db.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            db.Close();
+        }
     }
 }
