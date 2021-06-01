@@ -1,6 +1,7 @@
 ﻿using BibliotekaAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -26,12 +27,15 @@ namespace BibliotekaAPI.Controllers
         [HttpGet]
         public List<Knjiga> hxjhkghfjhk()
         {
-            string queryString =
-               "select k.PKKnjigaID, k.Naziv, p.Ime, p.Prezime " +
-               "from knjige as k join Pisci as p " +
-               "on k.FKPisacID = p.PKPisacID";
+            //string queryString =
+            //   "select k.PKKnjigaID, k.Naziv, p.Ime, p.Prezime " +
+            //   "from knjige as k join Pisci as p " +
+            //   "on k.FKPisacID = p.PKPisacID";
+            SqlCommand command = new SqlCommand("getAllFromKnjige", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
-            SqlCommand command = new SqlCommand(queryString, db);
             List<Knjiga> kList = new List<Knjiga>();
 
             try

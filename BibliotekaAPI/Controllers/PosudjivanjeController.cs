@@ -1,6 +1,7 @@
 ﻿using BibliotekaAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -26,11 +27,15 @@ namespace BibliotekaAPI.Controllers
         [HttpGet]
         public List<Posudjivanje> Citanje()
         {
-            string queryString =
-                "select Clanovi.Ime, Clanovi.Prezime, " +
-                "Knjige.Naziv, Posudjivanje.DatumUzimanja, Posudjivanje.DatumVracanja from Posudjivanje join Clanovi on Posudjivanje.FKClanID = Clanovi.PKClanID join Knjige on Posudjivanje.FKKnjigaID = Knjige.PKKnjigaID";
+            //string queryString =
+            //    "select Clanovi.Ime, Clanovi.Prezime, " +
+            //    "Knjige.Naziv, Posudjivanje.DatumUzimanja, Posudjivanje.DatumVracanja from Posudjivanje join Clanovi on Posudjivanje.FKClanID = Clanovi.PKClanID join Knjige on Posudjivanje.FKKnjigaID = Knjige.PKKnjigaID";
 
-            SqlCommand command = new SqlCommand(queryString, db);
+            SqlCommand command = new SqlCommand("getAllFromPosudjivanje", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+           
 
             List<Posudjivanje> posList = new List<Posudjivanje>();
             try
