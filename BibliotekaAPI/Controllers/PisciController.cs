@@ -27,7 +27,7 @@ namespace BibliotekaAPI.Controllers
         public List<Pisac> Citanje()
         {
             string queryString =
-               "SELECT * from Pisci";
+               "SELECT Top 100 * from Pisci";
 
             SqlCommand command = new SqlCommand(queryString, db);
 
