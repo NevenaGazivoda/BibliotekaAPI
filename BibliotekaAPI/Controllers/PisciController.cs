@@ -1,6 +1,7 @@
 ﻿using BibliotekaAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -26,10 +27,13 @@ namespace BibliotekaAPI.Controllers
         [HttpGet]
         public List<Pisac> Citanje()
         {
-            string queryString =
-               "SELECT Top 100 * from Pisci";
+            //string queryString =
+            //   "SELECT Top 100 * from Pisci";
 
-            SqlCommand command = new SqlCommand(queryString, db);
+            SqlCommand command = new SqlCommand("getAllFromPisci", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
             List<Pisac> pList = new List<Pisac>();
 

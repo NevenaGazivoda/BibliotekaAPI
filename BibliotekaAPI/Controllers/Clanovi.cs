@@ -1,6 +1,7 @@
 ﻿using BibliotekaAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -28,11 +29,14 @@ namespace BibliotekaAPI.Controllers
         {
             List<Clan> cList = new List<Clan>();
             
-            string queryString =
-                "SELECT * from Clanovi";
+            //string queryString =
+            //    "SELECT * from Clanovi";
 
-            SqlCommand command = new SqlCommand(queryString, db);
-
+            SqlCommand command = new SqlCommand("getAllFromClanovi", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+          
             try
             {
                 db.Open();
