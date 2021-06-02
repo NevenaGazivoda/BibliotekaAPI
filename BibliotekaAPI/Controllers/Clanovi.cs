@@ -65,7 +65,7 @@ namespace BibliotekaAPI.Controllers
 
         [Route("GET/{idClana}")]
         [HttpGet]
-        public Clan Citanje(int idClana)
+        public HttpResponseMessage Citanje(int idClana)
         {
 
             //string queryString =
@@ -78,14 +78,15 @@ namespace BibliotekaAPI.Controllers
 
             command.Parameters.Add("@ClanId", SqlDbType.Int).Value = idClana;
 
-            Clan clan = new Clan();
+            Clan clan = null;
             try
             {
                 db.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                
+
                 while (reader.Read())
                 {
+                    clan = new Clan();
                     clan.PKClanID = Convert.ToInt32(reader[0]);
                     clan.Ime = Convert.ToString(reader[1]);
                     clan.Prezime = Convert.ToString(reader[2]);
@@ -99,7 +100,13 @@ namespace BibliotekaAPI.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-            return clan;
+            if (clan == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, idClana);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, clan);
+
+
         }
 
         [Route("POST")]
