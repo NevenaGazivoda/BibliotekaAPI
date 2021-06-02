@@ -11,7 +11,5 @@ namespace BibliotekaAPI.Models
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public int GodRodjenja { get; set; }
-
-        
     }
 }

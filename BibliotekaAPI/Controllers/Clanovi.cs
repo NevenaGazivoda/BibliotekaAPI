@@ -12,7 +12,7 @@ namespace BibliotekaAPI.Controllers
 {
     [RoutePrefix("api/Clanovi")]
     public class ClanoviController : ApiController
-    {   
+    {
         string connectionString;
         SqlConnection db;
 
@@ -28,7 +28,7 @@ namespace BibliotekaAPI.Controllers
         public List<Clan> Citanje()
         {
             List<Clan> cList = new List<Clan>();
-            
+
             //string queryString =
             //    "SELECT * from Clanovi";
 
@@ -36,12 +36,12 @@ namespace BibliotekaAPI.Controllers
             {
                 CommandType = CommandType.StoredProcedure
             };
-          
+
             try
             {
                 db.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                
+
 
                 while (reader.Read())
                 {
@@ -113,12 +113,19 @@ namespace BibliotekaAPI.Controllers
         [HttpPost]
         public void Upis(Clan c)
         {
-            string queryString =
-                "INSERT INTO Clanovi (Ime, Prezime, GodRodjenja) VALUES ('" + c.Ime + "', '" + c.Prezime + "'," + c.GodRodjenja + ")";
+            //string queryString =
+            //    "INSERT INTO Clanovi (Ime, Prezime, GodRodjenja) VALUES ('" + c.Ime + "', '" + c.Prezime + "'," + c.GodRodjenja + ")";
 
-            Console.WriteLine(queryString);
+            //Console.WriteLine(queryString);
+            SqlCommand command = new SqlCommand("postClanovi", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
-            SqlCommand command = new SqlCommand(queryString, db);
+            command.Parameters.Add("@Ime", SqlDbType.VarChar).Value = c.Ime;
+            command.Parameters.Add("@Prezime", SqlDbType.VarChar).Value = c.Prezime;
+            command.Parameters.Add("@Godina", SqlDbType.Int).Value = c.GodRodjenja;
+
 
             try
             {
@@ -134,6 +141,30 @@ namespace BibliotekaAPI.Controllers
         }
 
 
+        [Route("DELETE/{idClana}")]
+        [HttpDelete]
+        public void Brisanje(int idClana)
+        {
+            //string queryString = "Delete from Clanovi where PKClanID =" + idClana;
 
+            SqlCommand command = new SqlCommand("deleteClanovi", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.Add("@IdClana", SqlDbType.Int).Value = idClana;
+
+            try
+            {
+                db.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            db.Close();
+        }
     }
 }
