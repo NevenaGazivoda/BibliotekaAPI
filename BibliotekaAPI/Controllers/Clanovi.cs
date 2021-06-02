@@ -83,8 +83,7 @@ namespace BibliotekaAPI.Controllers
             {
                 db.Open();
                 SqlDataReader reader = command.ExecuteReader();
-
-
+                
                 while (reader.Read())
                 {
                     clan.PKClanID = Convert.ToInt32(reader[0]);
