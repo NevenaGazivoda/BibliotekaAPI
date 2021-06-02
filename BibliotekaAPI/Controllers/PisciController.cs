@@ -66,10 +66,16 @@ namespace BibliotekaAPI.Controllers
         [HttpGet]
         public Pisac CitanjePojedinacno(int idPisca)
         {
-            string queryString =
-               "SELECT * from Pisci where PKPisacID=" + idPisca;
+            //string queryString =
+            //   "SELECT * from Pisci where PKPisacID=" + idPisca;
 
-            SqlCommand command = new SqlCommand(queryString, db);
+            SqlCommand command = new SqlCommand("getPisacById", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.Add("@PisacId", SqlDbType.Int).Value = idPisca;
+
             Pisac pisac = new Pisac();
 
             try
@@ -99,10 +105,20 @@ namespace BibliotekaAPI.Controllers
         [HttpPost]
         public void Unos(Pisac p)
         {
-            string queryString = "INSERT INTO Pisci (Ime, Prezime, GodRodjenja) " +
-               "VALUES ('" + p.Ime + "' ,'" + p.Prezime + "'," + p.GodRodjenja + ")";
+            //string queryString = "INSERT INTO Pisci (Ime, Prezime, GodRodjenja) " +
+            //   "VALUES ('" + p.Ime + "' ,'" + p.Prezime + "'," + p.GodRodjenja + ")";
 
-            SqlCommand command = new SqlCommand(queryString, db);
+            //SqlCommand command = new SqlCommand(queryString, db);
+
+            SqlCommand command = new SqlCommand("postPisci", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.Add("@Ime", SqlDbType.VarChar).Value = p.Ime;
+            command.Parameters.Add("@Prezime", SqlDbType.VarChar).Value = p.Prezime;
+            command.Parameters.Add("@Godina", SqlDbType.Int).Value = p.GodRodjenja;
+
 
             try
             {
@@ -121,12 +137,23 @@ namespace BibliotekaAPI.Controllers
         [HttpPut]
         public void Izmjena(Pisac p)
         {
-            string queryString = "UPDATE Pisci SET [Ime] = '" +p.Ime+
-                "',[Prezime] ='" + p.Prezime +
-                "',[GodRodjenja] =" + p.GodRodjenja +
-                " WHERE PKPisacID="+p.PKPisacID;
-              
-            SqlCommand command = new SqlCommand(queryString, db);
+            //string queryString = "UPDATE Pisci SET [Ime] = '" +p.Ime+
+            //    "',[Prezime] ='" + p.Prezime +
+            //    "',[GodRodjenja] =" + p.GodRodjenja +
+            //    " WHERE PKPisacID="+p.PKPisacID;
+
+            //SqlCommand command = new SqlCommand(queryString, db);
+
+            SqlCommand command = new SqlCommand("updatePisci", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.Add("@Ime", SqlDbType.VarChar).Value = p.Ime;
+            command.Parameters.Add("@Prezime", SqlDbType.VarChar).Value = p.Prezime;
+            command.Parameters.Add("@Godina", SqlDbType.Int).Value = p.GodRodjenja;
+            command.Parameters.Add("@PisacId", SqlDbType.Int).Value = p.PKPisacID;
+
 
             try
             {
@@ -145,9 +172,16 @@ namespace BibliotekaAPI.Controllers
         [HttpDelete]
         public void Brisanje(int idPisca)
         {
-            string queryString = "Delete from Pisci where PKPisacID =" + idPisca;
+            //string queryString = "Delete from Pisci where PKPisacID =" + idPisca;
 
-            SqlCommand command = new SqlCommand(queryString, db);
+            //SqlCommand command = new SqlCommand(queryString, db);
+
+            SqlCommand command = new SqlCommand("deletePisci", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.Add("@IdPisca", SqlDbType.Int).Value = idPisca;
 
             try
             {
