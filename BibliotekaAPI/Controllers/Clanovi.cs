@@ -68,10 +68,15 @@ namespace BibliotekaAPI.Controllers
         public Clan Citanje(int idClana)
         {
 
-            string queryString =
-                "SELECT * from Clanovi where PKClanID="+idClana;
+            //string queryString =
+            //    "SELECT * from Clanovi where PKClanID="+idClana;
 
-            SqlCommand command = new SqlCommand(queryString, db);
+            SqlCommand command = new SqlCommand("getClanById", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.Add("@ClanId", SqlDbType.Int).Value = idClana;
 
             Clan clan = new Clan();
             try
