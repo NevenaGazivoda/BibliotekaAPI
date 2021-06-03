@@ -29,9 +29,6 @@ namespace BibliotekaAPI.Controllers
         {
             List<Clan> cList = new List<Clan>();
 
-            //string queryString =
-            //    "SELECT * from Clanovi";
-
             SqlCommand command = new SqlCommand("getAllFromClanovi", db)
             {
                 CommandType = CommandType.StoredProcedure
@@ -67,10 +64,6 @@ namespace BibliotekaAPI.Controllers
         [HttpGet]
         public HttpResponseMessage Citanje(int idClana)
         {
-
-            //string queryString =
-            //    "SELECT * from Clanovi where PKClanID="+idClana;
-
             SqlCommand command = new SqlCommand("getClanById", db)
             {
                 CommandType = CommandType.StoredProcedure
@@ -113,10 +106,6 @@ namespace BibliotekaAPI.Controllers
         [HttpPost]
         public void Upis(Clan c)
         {
-            //string queryString =
-            //    "INSERT INTO Clanovi (Ime, Prezime, GodRodjenja) VALUES ('" + c.Ime + "', '" + c.Prezime + "'," + c.GodRodjenja + ")";
-
-            //Console.WriteLine(queryString);
             SqlCommand command = new SqlCommand("postClanovi", db)
             {
                 CommandType = CommandType.StoredProcedure
@@ -145,8 +134,6 @@ namespace BibliotekaAPI.Controllers
         [HttpDelete]
         public void Brisanje(int idClana)
         {
-            //string queryString = "Delete from Clanovi where PKClanID =" + idClana;
-
             SqlCommand command = new SqlCommand("deleteClanovi", db)
             {
                 CommandType = CommandType.StoredProcedure

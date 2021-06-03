@@ -27,10 +27,6 @@ namespace BibliotekaAPI.Controllers
         [HttpGet]
         public List<Knjiga> hxjhkghfjhk()
         {
-            //string queryString =
-            //   "select k.PKKnjigaID, k.Naziv, p.Ime, p.Prezime " +
-            //   "from knjige as k join Pisci as p " +
-            //   "on k.FKPisacID = p.PKPisacID";
             SqlCommand command = new SqlCommand("getAllFromKnjige", db)
             {
                 CommandType = CommandType.StoredProcedure
@@ -70,12 +66,6 @@ namespace BibliotekaAPI.Controllers
         [HttpPost]
         public void Upis(Knjiga k)
         {
-            //string queryString = "INSERT INTO[dbo].[Knjige] ([Naziv] ,[GodIzdanja] ,[FKPisacID]) " +
-            //    "VALUES ('" + k.Naziv + "' ," + k.GodIzdanja + "," + k.FKPisacID + ")";
-
-
-            //SqlCommand command = new SqlCommand(queryString, db);
-
             SqlCommand command = new SqlCommand("postKnjige", db)
             {
                 CommandType = CommandType.StoredProcedure

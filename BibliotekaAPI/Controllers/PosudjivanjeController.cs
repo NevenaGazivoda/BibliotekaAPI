@@ -27,10 +27,6 @@ namespace BibliotekaAPI.Controllers
         [HttpGet]
         public List<Posudjivanje> Citanje()
         {
-            //string queryString =
-            //    "select Clanovi.Ime, Clanovi.Prezime, " +
-            //    "Knjige.Naziv, Posudjivanje.DatumUzimanja, Posudjivanje.DatumVracanja from Posudjivanje join Clanovi on Posudjivanje.FKClanID = Clanovi.PKClanID join Knjige on Posudjivanje.FKKnjigaID = Knjige.PKKnjigaID";
-
             SqlCommand command = new SqlCommand("getAllFromPosudjivanje", db)
             {
                 CommandType = CommandType.StoredProcedure
@@ -81,11 +77,6 @@ namespace BibliotekaAPI.Controllers
         [HttpPost]
         public void Unos(Posudjivanje pos)
         {
-            //string queryString = "INSERT INTO Posudjivanje (FKClanID, FKKnjigaID, DatumUzimanja) " +
-            //    "VALUES (" + pos.FKClanID + " ," + pos.FKKnjigaID + ",'" + DateTime.Now + "')";
-
-            //SqlCommand command = new SqlCommand(queryString, db);
-
             SqlCommand command = new SqlCommand("postPosudjivanje", db)
             {
                 CommandType = CommandType.StoredProcedure
@@ -93,9 +84,8 @@ namespace BibliotekaAPI.Controllers
 
             command.Parameters.Add("@FKClana", SqlDbType.Int).Value = pos.FKClanID;
             command.Parameters.Add("@FKKnjige", SqlDbType.Int).Value = pos.FKKnjigaID;
-            command.Parameters.Add("@Datum", SqlDbType.Date).Value = pos.DatumUzimanja= DateTime.Now;
+            command.Parameters.Add("@Datum", SqlDbType.Date).Value = DateTime.Now;
             
-
 
             try
             {

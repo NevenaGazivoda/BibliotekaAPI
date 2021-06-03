@@ -27,9 +27,6 @@ namespace BibliotekaAPI.Controllers
         [HttpGet]
         public List<Pisac> Citanje()
         {
-            //string queryString =
-            //   "SELECT Top 100 * from Pisci";
-
             SqlCommand command = new SqlCommand("getAllFromPisci", db)
             {
                 CommandType = CommandType.StoredProcedure
@@ -105,11 +102,6 @@ namespace BibliotekaAPI.Controllers
         [HttpPost]
         public void Unos(Pisac p)
         {
-            //string queryString = "INSERT INTO Pisci (Ime, Prezime, GodRodjenja) " +
-            //   "VALUES ('" + p.Ime + "' ,'" + p.Prezime + "'," + p.GodRodjenja + ")";
-
-            //SqlCommand command = new SqlCommand(queryString, db);
-
             SqlCommand command = new SqlCommand("postPisci", db)
             {
                 CommandType = CommandType.StoredProcedure
@@ -137,13 +129,6 @@ namespace BibliotekaAPI.Controllers
         [HttpPut]
         public void Izmjena(Pisac p)
         {
-            //string queryString = "UPDATE Pisci SET [Ime] = '" +p.Ime+
-            //    "',[Prezime] ='" + p.Prezime +
-            //    "',[GodRodjenja] =" + p.GodRodjenja +
-            //    " WHERE PKPisacID="+p.PKPisacID;
-
-            //SqlCommand command = new SqlCommand(queryString, db);
-
             SqlCommand command = new SqlCommand("updatePisci", db)
             {
                 CommandType = CommandType.StoredProcedure
@@ -172,10 +157,6 @@ namespace BibliotekaAPI.Controllers
         [HttpDelete]
         public void Brisanje(int idPisca)
         {
-            //string queryString = "Delete from Pisci where PKPisacID =" + idPisca;
-
-            //SqlCommand command = new SqlCommand(queryString, db);
-
             SqlCommand command = new SqlCommand("deletePisci", db)
             {
                 CommandType = CommandType.StoredProcedure
