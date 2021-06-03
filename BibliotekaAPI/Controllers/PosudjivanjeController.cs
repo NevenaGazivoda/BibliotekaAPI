@@ -81,10 +81,21 @@ namespace BibliotekaAPI.Controllers
         [HttpPost]
         public void Unos(Posudjivanje pos)
         {
-            string queryString = "INSERT INTO Posudjivanje (FKClanID, FKKnjigaID, DatumUzimanja) " +
-                "VALUES (" + pos.FKClanID + " ," + pos.FKKnjigaID + ",'" + DateTime.Now + "')";
+            //string queryString = "INSERT INTO Posudjivanje (FKClanID, FKKnjigaID, DatumUzimanja) " +
+            //    "VALUES (" + pos.FKClanID + " ," + pos.FKKnjigaID + ",'" + DateTime.Now + "')";
 
-            SqlCommand command = new SqlCommand(queryString, db);
+            //SqlCommand command = new SqlCommand(queryString, db);
+
+            SqlCommand command = new SqlCommand("postPosudjivanje", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.Add("@FKClana", SqlDbType.Int).Value = pos.FKClanID;
+            command.Parameters.Add("@FKKnjige", SqlDbType.Int).Value = pos.FKKnjigaID;
+            command.Parameters.Add("@Datum", SqlDbType.Date).Value = pos.DatumUzimanja= DateTime.Now;
+            
+
 
             try
             {
