@@ -70,11 +70,21 @@ namespace BibliotekaAPI.Controllers
         [HttpPost]
         public void Upis(Knjiga k)
         {
-            string queryString = "INSERT INTO[dbo].[Knjige] ([Naziv] ,[GodIzdanja] ,[FKPisacID]) " +
-                "VALUES ('" + k.Naziv + "' ," + k.GodIzdanja + "," + k.FKPisacID + ")";
+            //string queryString = "INSERT INTO[dbo].[Knjige] ([Naziv] ,[GodIzdanja] ,[FKPisacID]) " +
+            //    "VALUES ('" + k.Naziv + "' ," + k.GodIzdanja + "," + k.FKPisacID + ")";
 
 
-            SqlCommand command = new SqlCommand(queryString, db);
+            //SqlCommand command = new SqlCommand(queryString, db);
+
+            SqlCommand command = new SqlCommand("postKnjige", db)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.Add("@Naziv", SqlDbType.VarChar).Value = k.Naziv;
+            command.Parameters.Add("@Godina", SqlDbType.Int).Value = k.GodIzdanja;
+            command.Parameters.Add("@FKPisca", SqlDbType.Int).Value = k.FKPisacID;
+
 
             try
             {
